@@ -41,13 +41,24 @@ class User extends Authenticatable
         'verification_token',
 
     ];
+
+    //Mutators & Accessors
+    public function setNameAttribute($value){
+        $this->attributes['name']=strtolower($value);
+    }
+    public function getNameAttribute($value){
+        return ucwords($value);
+    }
+    public function setEmailAttribute($value){
+        $this->attributes['email']=strtolower($value);
+    }
     //Checking if user is admin
     public function isAdmin(){
         return $this->admin==User::ADMIN_USER;
     }
     //Checking if user is verified
     public function isVerified(){
-        return $this->verified=User::VERIFIED_USER;
+        return $this->verified==User::VERIFIED_USER;
     }
     //generating verification code
     public static function generateVerificationCode(){

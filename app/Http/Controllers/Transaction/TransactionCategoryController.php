@@ -1,22 +1,31 @@
 <?php
 
-namespace App\Http\Controllers\Seller;
+namespace App\Http\Controllers\Transaction;
 
-use App\Seller;
-use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
+use App\Product;
+use App\Traits\ApiResponser;
+use App\Transaction;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class SellerController extends ApiController
+class TransactionCategoryController extends ApiController
 {
+    use ApiResponser;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Transaction $transaction)
     {
-        $sellers=Seller::has('products')->get();
-        return $this->showAll($sellers);
+        //first obtain collection of products transaction has
+        $products=Product::where('id',$transaction->product_id)->get();
+        foreach ($products as $product){
+           // echo $product->categories;
+            return $this->showAll($product->categories);
+        }
+
     }
 
     /**
@@ -46,10 +55,9 @@ class SellerController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Seller $seller)
+    public function show($id)
     {
-       // $seller=Seller::has('products')->findOrFail($id);
-        return $this->showOne($seller);
+        //
     }
 
     /**
@@ -83,6 +91,6 @@ class SellerController extends ApiController
      */
     public function destroy($id)
     {
-
+        //
     }
 }

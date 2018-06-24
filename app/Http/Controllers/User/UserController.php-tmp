@@ -25,17 +25,17 @@ class UserController extends ApiController {
 	 */
 	public function store(Request $request) {
 		$rules = [
-			'name' => 'required',
-			'email' => 'required|email|unique:users',
+			'name'     => 'required',
+			'email'    => 'required|email|unique:users',
 			'password' => 'required|min:6',
 		];
 		$this->validate($request, $rules);
-		$input = $request->all();
-		$input['password'] = bcrypt($request->password);
-		$input['verified'] = User::UNVERIFIED_USER;
+		$input                       = $request->all();
+		$input['password']           = bcrypt($request->password);
+		$input['verified']           = User::UNVERIFIED_USER;
 		$input['verification_token'] = User::generateVerificationCode();
-		$input['admin'] = User::REGULAR_USER;
-		$user = User::create($input);
+		$input['admin']              = User::REGULAR_USER;
+		$user                        = User::create($input);
 		return $this->showOne($user, 201);
 
 	}
@@ -62,17 +62,17 @@ class UserController extends ApiController {
 
 		$rules = [
 			'password' => 'required|min:6',
-			'email' => 'email|unique:users,email,' . $user->id,
-			'admin' => 'in:' . User::ADMIN_USER . ',' . User::REGULAR_USER,
+			'email'    => 'email|unique:users,email,'.$user->id,
+			'admin'    => 'in:'.User::ADMIN_USER.','.User::REGULAR_USER,
 		];
 		$this->validate($request, $rules);
 		if ($request->has('name')) {
 			$user->name = $request->name;
 		}
 		if ($request->has('email') && $user->email != $request->email) {
-			$user->verified = User::UNVERIFIED_USER;
+			$user->verified           = User::UNVERIFIED_USER;
 			$user->verification_token = User::generateVerificationCode();
-			$user->email = $request->email;
+			$user->email              = $request->email;
 		}
 		if ($request->has('password')) {
 			$user->password = bcrypt($request->password);
@@ -97,7 +97,7 @@ class UserController extends ApiController {
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function destroy(User $user) //Model binding
+	public function destroy(User $user)//Model binding
 	{
 		// $user=User::findOrFail($id);
 		$user->delete();

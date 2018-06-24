@@ -42,3 +42,8 @@ Route::resource('/transactions','Transaction\TransactionController',['only'=>['i
  * User Routes
  */
 Route::resource('/users','User\UserController',['except'=>['create','edit']]);
+
+/*
+ * TransactionCategory Routes
+ */
+Route::resource('/transactions.categories','Transaction\TransactionCategoryController');

@@ -19,12 +19,14 @@ class TransactionCategoryController extends ApiController
      */
     public function index(Transaction $transaction)
     {
-        //first obtain collection of products transaction has
-        $products=Product::where('id',$transaction->product_id)->get();
-        foreach ($products as $product){
-           // echo $product->categories;
-            return $this->showAll($product->categories);
-        }
+            $categories=$transaction->product->categories;
+            return $this->showAll($categories);
+//        //first obtain collection of products transaction has
+//        $products=Product::where('id',$transaction->product_id)->get();
+//        foreach ($products as $product){
+//           // echo $product->categories;
+//            return $this->showAll($product->categories);
+//        }
 
     }
 

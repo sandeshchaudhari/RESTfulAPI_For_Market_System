@@ -16,7 +16,7 @@ class Transaction extends Model
 
     ];
     public function product(){
-        $this->belongsTo('App\Product');
+        return $this->belongsTo('App\Product');
     }
     public function buyer(){
         return $this->belongsTo('App\Buyer');

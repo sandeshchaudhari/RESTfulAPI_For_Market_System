@@ -1,7 +1,8 @@
 <?php
 namespace App\Traits;
 
-use Illuminate\Database\Eloquent\Collection;
+//use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 trait ApiResponser{
@@ -19,5 +20,8 @@ trait ApiResponser{
     protected function showOne(Model $model,$code=200){
         return $this->successResponse(['data'=>$model],$code);
 
+    }
+    protected function showMessage($message,$code){
+        return $this->successResponse(['data'=>$message],$code);
     }
 }

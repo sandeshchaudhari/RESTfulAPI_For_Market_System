@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\ApiController;
+use App\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends ApiController {
@@ -13,7 +14,8 @@ class ProductController extends ApiController {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function index() {
-		//
+		$products=Product::all();
+		return $this->showAll($products);
 	}
 
 	/**
@@ -42,7 +44,7 @@ class ProductController extends ApiController {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function show(Product $product) {
-		$this->showAll();
+		return $this->showOne($product);
 	}
 
 	/**

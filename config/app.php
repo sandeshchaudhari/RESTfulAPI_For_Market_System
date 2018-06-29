@@ -1,5 +1,7 @@
 <?php
 
+use Spatie\Fractal\FractalServiceProvider;
+
 return [
 
     /*
@@ -167,7 +169,7 @@ return [
         /*
          * Package Service Providers...
          */
-
+            FractalServiceProvider::class,
         /*
          * Application Service Providers...
          */

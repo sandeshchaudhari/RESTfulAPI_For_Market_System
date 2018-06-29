@@ -3,11 +3,13 @@
 namespace App;
 
 use App\Scopes\SellerScope;
+use App\Transformers\SellerTransformer;
 use Illuminate\Database\Eloquent\Model;
 
 
 class Seller extends User
 {
+    public $transformer=SellerTransformer::class;
     //adding SellerScop
     protected static function boot()
     {

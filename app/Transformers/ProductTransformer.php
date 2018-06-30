@@ -27,4 +27,25 @@ class ProductTransformer extends TransformerAbstract
             'deletedDate'=>isset($product->deleted_at)?(string)$product->deleted_at:null,
         ];
     }
+
+    /**
+     * @param $index
+     * @return mixed|null
+     */
+    public static function originalAttribute($index){
+        $attributes=[
+            'identifier'=>'id',
+            'title'=>'name',
+            'details'=>'description',
+            'stock'=>'quantity',
+            'situation'=>'status',
+            'picture'=>'image',
+            'seller'=>'seller_id',
+            'creationDate'=>'created_at',
+            'lastChange'=>'updated_at',
+            'deletedDate'=>'deleted_at',
+
+        ];
+        return isset($attributes[$index])?$attributes[$index]:null;
+    }
 }

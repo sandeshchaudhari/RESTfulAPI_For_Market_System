@@ -5,6 +5,9 @@ namespace App\Traits;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Validator;
+
 
 trait ApiResponser{
 
@@ -72,7 +75,7 @@ trait ApiResponser{
         $rules=[
             'per_page'=>'integer|min:2|max:50',
         ];
-        Validator:validate(request()->all(),$rules);
+        Validator::validate(request()->all(),$rules);
         $page=LengthAwarePaginator::resolveCurrentPage();
         $perPage=15;
         if(request()->has('per_page')){
@@ -87,6 +90,16 @@ trait ApiResponser{
     protected function transformData($data,$transformer){
         $transformation=fractal($data,new $transformer);
         return $transformation->toArray();
+    }
+
+    protected function cacheResponse($data){
+        $url=request()->url();
+        $queryparams=request()->query();
+        ksort($queryparams);
+        $fullUrl=http_build_query($queryparams);
+        return Cache::remember($fullUrl,30/60,function () use($data){
+           return $data;
+        });
     }
 
 }
